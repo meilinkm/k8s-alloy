@@ -16,23 +16,23 @@ alloy:
     configMap:
       create: true
       content: |
-        # 1. Discover all pod logs on the node
+        // 1. Discover all pod logs on the node
         discovery.kubernetes "pod_logs" {
           role = "pod"
         }
 
-        # 2. Filter and relabel (optional, but recommended for clean metadata)
+        // 2. Filter and relabel (optional, but recommended for clean metadata)
         discovery.relabel "logs_to_scrape" {
           targets = discovery.kubernetes.pod_logs.targets
         }
 
-        # 3. Scrape the files from the host path (/var/log/pods)
+        // 3. Scrape the files from the host path (/var/log/pods)
         loki.source.kubernetes "pod_logs" {
           targets    = discovery.relabel.logs_to_scrape.output
           forward_to = [loki.write.local_loki.receiver]
         }
 
-        # 4. Send the logs to your Loki endpoint
+        // 4. Send the logs to your Loki endpoint
         loki.write "local_loki" {
           endpoint {
             url = "http://loki-gateway.monitoring.svc.cluster.local"
