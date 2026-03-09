@@ -1,0 +1,10 @@
+apiVersion: v2
+name: alloy
+description: A Helm chart for Grafana Alloy on Kubernetes
+type: application
+version: 0.1.0 # version of the parent helm chart
+appVersion: "v1.13.2" # version of alloy being deployed
+dependencies:
+  - name: alloy
+    version: 1.6.1 # version of the helm chart for Grafana Alloy used
+    repository: https://grafana.github.io/helm-charts

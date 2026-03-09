@@ -1,0 +1,22 @@
+global:
+  # -- Security context to apply to the Grafana Alloy pod.
+  podSecurityContext:
+    supplementalGroups:
+      - 0  # Granting access to root-owned host logs
+    runAsNonRoot: true
+
+alloy:
+  alloy:
+    # -- Security context for the Grafana Alloy container.
+    securityContext:
+      runAsUser: 473
+      runAsGroup: 473
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+          - ALL
+
+  # Enable host log mounting via built-in chart helpers
+  mounts:
+    varlog: true  # Mounts /var/log from the host
+    dockercontainers: true # Mounts docker container logs if applicable
