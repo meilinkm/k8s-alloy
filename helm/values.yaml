@@ -16,6 +16,16 @@ alloy:
         drop:
           - ALL
 
+    configReloader:
+      securityContext:
+        runAsUser: 65534
+        runAsGroup: 65534
+        runAsNonRoot: true
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+            - ALL
+
   # Enable host log mounting via built-in chart helpers
   mounts:
     varlog: true  # Mounts /var/log from the host
