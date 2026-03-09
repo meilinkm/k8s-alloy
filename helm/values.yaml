@@ -16,6 +16,16 @@ alloy:
       varlog: true
       dockercontainers: true
 
+    # Add resource requests & limits
+    # By default, only the configReloader container has requests set, but not the alloy container itself.
+    resources:
+      requests:
+        cpu: "100m"
+        memory: "128Mi"
+      limits:
+        cpu: "500m"
+        memory: "512Mi"
+
     configMap:
       create: true
       content: |
