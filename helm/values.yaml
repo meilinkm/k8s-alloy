@@ -12,6 +12,9 @@ alloy:
       capabilities:
         drop:
           - ALL
+    mounts:
+      varlog: true
+      dockercontainers: true
 
     configMap:
       create: true
@@ -24,6 +27,15 @@ alloy:
         // 2. Filter and relabel (optional, but recommended for clean metadata)
         discovery.relabel "logs_to_scrape" {
           targets = discovery.kubernetes.pod_logs.targets
+
+          rule {
+            source_labels = ["__meta_kubernetes_namespace"]
+            target_label  = "namespace"
+          }
+          rule {
+            source_labels = ["__meta_kubernetes_pod_name"]
+            target_label  = "pod"
+          }
         }
 
         // 3. Scrape the files from the host path (/var/log/pods)
@@ -35,7 +47,7 @@ alloy:
         // 4. Send the logs to your Loki endpoint
         loki.write "local_loki" {
           endpoint {
-            url = "http://loki-gateway.monitoring.svc.cluster.local"
+            url = "http://loki-gateway.monitoring.svc.cluster.local/loki/api/v1/push"
           }
         }
 
@@ -49,7 +61,4 @@ alloy:
         drop:
           - ALL
 
-  mounts:
-    varlog: true
-    dockercontainers: true
 
