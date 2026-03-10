@@ -21,10 +21,10 @@ alloy:
     resources:
       requests:
         cpu: "100m"
-        memory: "128Mi"
+        memory: "350Mi"
       limits:
-        cpu: "500m"
-        memory: "512Mi"
+        cpu: "200m"
+        memory: "500Mi"
 
     configMap:
       create: true
